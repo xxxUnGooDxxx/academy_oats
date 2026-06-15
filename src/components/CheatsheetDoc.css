@@ -1,0 +1,130 @@
+/* На экране печатный документ скрыт; виден только при печати (см. Block.css). */
+.cheat-doc {
+  display: none;
+}
+
+@media print {
+  .cheat-doc {
+    display: block;
+    padding: 8mm 4mm;
+    color: #1d1d1d;
+    font-family: 'Inter', sans-serif;
+  }
+  .cheat-doc-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 3px solid #ffcc00;
+    padding-bottom: 12px;
+    margin-bottom: 18px;
+  }
+  .cheat-doc-head img {
+    height: 26px;
+  }
+  .cheat-doc-badge {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    color: #8a8a8a;
+  }
+  .cheat-doc-title {
+    font-size: 24px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    margin-bottom: 20px;
+    line-height: 1.15;
+  }
+  .cheat-doc-num {
+    display: block;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #b8860b;
+    margin-bottom: 4px;
+  }
+  .cheat-doc-section {
+    margin-bottom: 18px;
+    break-inside: avoid;
+  }
+  .cheat-doc-section h2 {
+    font-size: 14px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-left: 4px solid #ffcc00;
+    padding-left: 10px;
+    margin-bottom: 12px;
+  }
+  .cheat-doc-points {
+    list-style: none;
+    padding: 0;
+  }
+  .cheat-doc-points li {
+    position: relative;
+    padding-left: 22px;
+    margin-bottom: 7px;
+    font-size: 13.5px;
+    line-height: 1.4;
+  }
+  .cheat-doc-points li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: #27ae60;
+    font-weight: 900;
+  }
+  .cheat-doc-prices {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+  }
+  .cheat-doc-price {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    background: #f6f6f6;
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 12.5px;
+  }
+  .cheat-doc-price b {
+    white-space: nowrap;
+  }
+  .cheat-doc-questions {
+    list-style: none;
+    padding: 0;
+    counter-reset: q;
+  }
+  .cheat-doc-questions li {
+    position: relative;
+    padding-left: 26px;
+    margin-bottom: 7px;
+    font-size: 13.5px;
+    line-height: 1.4;
+    counter-increment: q;
+  }
+  .cheat-doc-questions li::before {
+    content: counter(q);
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 17px;
+    height: 17px;
+    background: #ffcc00;
+    border-radius: 50%;
+    font-size: 11px;
+    font-weight: 800;
+    text-align: center;
+    line-height: 17px;
+  }
+  .cheat-doc-footer {
+    margin-top: 24px;
+    padding-top: 12px;
+    border-top: 1px solid #e7e7e7;
+    font-size: 10.5px;
+    color: #8a8a8a;
+    line-height: 1.4;
+  }
+}

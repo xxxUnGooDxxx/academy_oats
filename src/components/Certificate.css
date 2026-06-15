@@ -1,0 +1,111 @@
+.cert-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+.cert {
+  width: 100%;
+  max-width: 720px;
+  background: #fff;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 14px;
+}
+.cert-border {
+  border: 3px solid var(--yellow);
+  border-radius: 12px;
+  padding: 44px 40px 32px;
+  text-align: center;
+  position: relative;
+  background: linear-gradient(180deg, #fffef8 0%, #fff 40%);
+}
+.cert-logo {
+  height: 30px;
+  margin: 0 auto 24px;
+}
+.cert-seal {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: var(--yellow);
+  color: var(--black);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+  box-shadow: 0 4px 14px rgba(255, 204, 0, 0.5);
+}
+.cert-eyebrow {
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--gray-t);
+}
+.cert-course {
+  font-size: 40px;
+  font-weight: 900;
+  letter-spacing: -1px;
+  margin: 4px 0 2px;
+}
+.cert-sub {
+  font-size: 15px;
+  color: var(--gray-t);
+  margin-bottom: 28px;
+}
+.cert-given {
+  font-size: 14px;
+  color: var(--gray-t);
+  margin-bottom: 10px;
+}
+.cert-name {
+  font-size: 30px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  border-bottom: 2px solid var(--gray-2);
+  display: inline-block;
+  padding: 0 24px 8px;
+  margin-bottom: 18px;
+}
+.cert-text {
+  font-size: 15px;
+  line-height: 1.55;
+  max-width: 460px;
+  margin: 0 auto 32px;
+}
+.cert-footer {
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid var(--gray-2);
+  padding-top: 16px;
+  font-size: 13px;
+  color: var(--gray-t);
+}
+.cert-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* Печать: только сертификат на лист */
+@media print {
+  body {
+    background: #fff;
+  }
+  .top,
+  .bottom,
+  .cert-actions,
+  .exam-intro,
+  .step-dots {
+    display: none !important;
+  }
+  .main-content {
+    padding: 0;
+  }
+  .cert {
+    box-shadow: none;
+    max-width: 100%;
+  }
+}
