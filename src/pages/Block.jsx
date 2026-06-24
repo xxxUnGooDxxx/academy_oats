@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useParams, Link, useNavigate } from 'react-router-dom'
 import {
   ArrowLeft,
@@ -28,6 +28,15 @@ export default function Block() {
   const navigate = useNavigate()
   const block = getBlock(slug)
   const [step, setStep] = useState(0)
+  const [quizPassed, setQuizPassed] = useState(false)
+
+  // При переходе на другой блок react-router переиспользует компонент и не
+  // сбрасывает состояние — поэтому сбрасываем шаг на начало вручную.
+  useEffect(() => {
+    setStep(0)
+    setQuizPassed(false)
+    window.scrollTo({ top: 0 })
+  }, [slug])
 
   if (!block) {
     return (
@@ -47,11 +56,19 @@ export default function Block() {
   const idx = blocks.findIndex((b) => b.slug === slug)
   const nextBlock = blocks[idx + 1]
 
-  function go(delta) {
-    const n = step + delta
-    if (n < 0) return
-    if (n >= steps.length) return
+  function goToStep(n) {
+    if (n < 0 || n >= steps.length) return
+    setQuizPassed(false)
     setStep(n)
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
+  function go(delta) {
+    goToStep(step + delta)
+  }
+
+  function goToBlock(target) {
+    navigate(target)
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
@@ -82,7 +99,7 @@ export default function Block() {
           <button
             key={i}
             className={`step-dot ${i === step ? 'active' : ''} ${i < step ? 'done' : ''}`}
-            onClick={() => setStep(i)}
+            onClick={() => goToStep(i)}
             aria-label={`Экран ${i + 1}`}
           />
         ))}
@@ -100,6 +117,7 @@ export default function Block() {
             questions={block.quiz}
             title={`Тест: ${block.title}`}
             onFinish={(score, total) => saveBlockResult(slug, score, total, COURSE.passScore)}
+            onStatusChange={({ passed }) => setQuizPassed(passed)}
           />
         )}
       </div>
@@ -113,12 +131,16 @@ export default function Block() {
           <button className="btn btn-primary" onClick={() => go(1)}>
             Дальше <ArrowRight size={16} />
           </button>
+        ) : !quizPassed ? (
+          // На шаге теста кнопка перехода появляется только после сдачи (≥80%),
+          // чтобы нельзя было перепрыгнуть блок, не ответив на вопросы.
+          <span className="nav-hint muted">Сдайте тест, чтобы продолжить</span>
         ) : nextBlock ? (
-          <button className="btn btn-primary" onClick={() => navigate(`/block/${nextBlock.slug}`)}>
+          <button className="btn btn-primary" onClick={() => goToBlock(`/block/${nextBlock.slug}`)}>
             Следующий блок <ArrowRight size={16} />
           </button>
         ) : (
-          <button className="btn btn-primary" onClick={() => navigate('/')}>
+          <button className="btn btn-primary" onClick={() => goToBlock('/')}>
             Завершить курс <ArrowRight size={16} />
           </button>
         )}

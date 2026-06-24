@@ -14,7 +14,7 @@ function isCorrect(question, selected) {
   return selected[0] === question.correct
 }
 
-export default function Quiz({ questions, onFinish, title = 'Проверка' }) {
+export default function Quiz({ questions, onFinish, onStatusChange, title = 'Проверка' }) {
   const [current, setCurrent] = useState(0)
   const [selected, setSelected] = useState([])
   const [checked, setChecked] = useState(false)
@@ -44,6 +44,8 @@ export default function Quiz({ questions, onFinish, title = 'Проверка' }
     if (last) {
       setDone(true)
       onFinish?.(score, questions.length)
+      const pct = Math.round((score / questions.length) * 100)
+      onStatusChange?.({ done: true, passed: pct >= 80 })
     } else {
       setCurrent((c) => c + 1)
       setSelected([])
@@ -57,6 +59,7 @@ export default function Quiz({ questions, onFinish, title = 'Проверка' }
     setChecked(false)
     setScore(0)
     setDone(false)
+    onStatusChange?.({ done: false, passed: false })
   }
 
   if (done) {
